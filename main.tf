@@ -8,19 +8,6 @@ data "terraform_remote_state" "host" {
   }
 }
 
-data "terraform_remote_state" "global" {
-  backend = "remote"
-  config = {
-    organization = var.org
-    workspaces = {
-      name = var.globalwsname
-    }
-  }
-}
-variable "globalwsname" {
-  type = string
-}
-
 
 resource "null_resource" "vm_node_init" {
   triggers = {
@@ -42,7 +29,7 @@ resource "null_resource" "vm_node_init" {
   provisioner "remote-exec" {
     inline = [
         "chmod +x /tmp/gentraffic.sh",
-        "/tmp/gentraffic.sh ${local.host} ${local.appport}"
+        "/tmp/gentraffic.sh localhost 30080"
     ]
     connection {
       type = "ssh"
@@ -70,7 +57,6 @@ variable "trigcount" {
 }
 locals {
   host = data.terraform_remote_state.host.outputs.host
-  appport = data.terraform_remote_state.global.outputs.appport
 }
 
 
