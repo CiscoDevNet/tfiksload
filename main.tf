@@ -65,6 +65,9 @@ variable "hostwsname" {
 variable "privatekey" {
   type = string
 }
+variable "trigcount" {
+  type = string
+}
 locals {
   host = data.terraform_remote_state.host.outputs.host
   appport = data.terraform_remote_state.global.outputs.appport
