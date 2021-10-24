@@ -8,6 +8,15 @@ data "terraform_remote_state" "host" {
   }
 }
 
+data "terraform_remote_state" "global" {
+  backend = "remote"
+  config = {
+    organization = var.org
+    workspaces = {
+      name = var.globalwsname
+    }
+  }
+}
 
 resource "null_resource" "vm_node_init" {
   triggers = {
@@ -20,7 +29,7 @@ resource "null_resource" "vm_node_init" {
       type = "ssh"
       host = local.host
       user = "iksadmin"
-      private_key = var.privatekey
+      private_key = local.privatekey
       port = "22"
       agent = false
     }
@@ -35,7 +44,7 @@ resource "null_resource" "vm_node_init" {
       type = "ssh"
       host = local.host
       user = "iksadmin"
-      private_key = var.privatekey
+      private_key = local.privatekey
       port = "22"
       agent = false
     }
@@ -49,14 +58,12 @@ variable "hostwsname" {
   type = string
 }
 
-variable "privatekey" {
-  type = string
-}
 variable "trigcount" {
   type = string
 }
 locals {
   host = data.terraform_remote_state.host.outputs.host
+  privatekey = data.terraform_remote_state.global.outputs.privatekey
 }
 
 
