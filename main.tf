@@ -58,6 +58,9 @@ variable "hostwsname" {
   type = string
 }
 
+variable "globalwsname" {
+  type = string
+}
 variable "trigcount" {
   type = string
 }
