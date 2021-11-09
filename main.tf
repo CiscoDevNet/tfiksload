@@ -66,7 +66,8 @@ variable "trigcount" {
 }
 locals {
   host = data.terraform_remote_state.host.outputs.host
-  privatekey = data.terraform_remote_state.global.outputs.privatekey
+#  privatekey = data.terraform_remote_state.global.outputs.privatekey
+  privatekey = base64decode(data.terraform_remote_state.global.outputs.privatekey)
 }
 
 
