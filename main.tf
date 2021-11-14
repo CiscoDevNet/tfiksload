@@ -38,7 +38,7 @@ resource "null_resource" "vm_node_init" {
   provisioner "remote-exec" {
     inline = [
         "chmod +x /tmp/gentraffic.sh",
-        "/tmp/gentraffic.sh localhost 30080"
+        "/tmp/gentraffic.sh localhost 8080"
     ]
     connection {
       type = "ssh"
