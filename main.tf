@@ -38,7 +38,7 @@ resource "null_resource" "vm_node_init" {
   provisioner "remote-exec" {
     inline = [
         "chmod +x /tmp/gentraffic.sh",
-        "/tmp/gentraffic.sh localhost 30080"
+        "/tmp/gentraffic.sh ${local.host} ${local.appport}"
     ]
     connection {
       type = "ssh"
@@ -68,6 +68,7 @@ locals {
   host = data.terraform_remote_state.host.outputs.host
 #  privatekey = data.terraform_remote_state.global.outputs.privatekey
   privatekey = base64decode(data.terraform_remote_state.global.outputs.privatekey)
+  appport = data.terraform_remote_state.global.outputs.appport
 }
 
 
